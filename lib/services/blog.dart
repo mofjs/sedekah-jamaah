@@ -13,7 +13,16 @@ class BlogService {
         .map((json) => BlogPost.fromJson(json))
         .toList();
     } else {
-      throw Exception('Failed to load posts.');
+      return null;
+    }
+  }
+
+  Future<BlogMedia> fetchMedia(int id) async {
+    final response = await http.get(baseUrl + 'media/' + id.toString());
+    if (response.statusCode == 200) {
+      return BlogMedia.fromJson(jsonDecode(response.body));
+    } else {
+      return null;
     }
   }
 }
