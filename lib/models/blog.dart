@@ -7,9 +7,11 @@ class BlogPost {
   final String title;
   final String excerpt;
   final String content;
-  final int featuredMedia;
+  final int featuredMediaId;
 
-  BlogPost({this.id, this.date, this.link, this.slug, this.title, this.excerpt, this.content, this.featuredMedia});
+  BlogMedia featuredMedia;
+
+  BlogPost({this.id, this.date, this.link, this.slug, this.title, this.excerpt, this.content, this.featuredMediaId});
 
   factory BlogPost.fromJson(Map<String, dynamic> json) {
     return BlogPost(
@@ -20,7 +22,7 @@ class BlogPost {
       title: json['title']['rendered'],
       excerpt: json['excerpt']['rendered'],
       content: json['content']['rendered'],
-      featuredMedia: json['featured_media'],
+      featuredMediaId: json['featured_media'],
     );
   }
 }
