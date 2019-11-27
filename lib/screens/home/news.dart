@@ -19,15 +19,14 @@ class _HomeNewsState extends State<HomeNews> {
 
   Future<List<BlogPost>> _fetchPostAndMedia() async {
     List<BlogPost> posts = await BlogService().fetchPosts();
-    posts.forEach((post) async {
+    for (var post in posts) {
       post.featuredMedia = await BlogService().fetchMedia(post.featuredMediaId);
-    });
+    }
     return posts;
   }
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder<List<BlogPost>>(
       future: posts,
       builder: (context, snapshot) {
@@ -40,16 +39,14 @@ class _HomeNewsState extends State<HomeNews> {
         }
         if (snapshot.hasError) {
           return SliverFixedExtentList(
-            delegate: SliverChildListDelegate([
-              Text('${snapshot.error}')
-            ]),
+            delegate: SliverChildListDelegate(
+                [Center(child: Text('${snapshot.error}'))]),
             itemExtent: 200.0,
           );
         }
         return SliverFillViewport(
-          delegate: SliverChildListDelegate([
-            CircularProgressIndicator()
-          ]),
+          delegate: SliverChildListDelegate(
+              [Center(child: CircularProgressIndicator())]),
         );
       },
     );
